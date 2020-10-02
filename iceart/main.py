@@ -1,16 +1,9 @@
-from flask import Flask
-
-app = Flask(__name__)
-
-
-@app.route("/")
-def index():
-    """Temp hello world!"""
-    return {"message": "I'm a json object!"}
+from .setup import create_app
 
 
 def main() -> None:
     """Starting point."""
+    app = create_app()
     app.run()
 
 
