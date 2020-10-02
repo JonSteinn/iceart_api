@@ -9,5 +9,10 @@ def index():
     return {"message": "I'm a json object!"}
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """Starting point."""
     app.run()
+
+
+if __name__ == "__main__":
+    main()
