@@ -34,7 +34,12 @@ setup(
     packages=find_packages(),
     long_description_content_type="text/x-rst",
     long_description=read("README.rst"),
-    install_requires=["flask==1.1.1"],
+    install_requires=[
+        "flask==1.1.1",
+        "Flask-PyMongo==2.3.0",
+        "dnspython==2.0.0",
+        "python-dotenv==0.14.0",
+    ],
     python_requires=">=3.7",
     include_package_data=True,
     classifiers=[

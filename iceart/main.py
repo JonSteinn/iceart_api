@@ -1,9 +1,11 @@
-from .setup import create_app
+from .db import mongo
+from .setup import DevConfig, create_app
 
 
 def main() -> None:
     """Starting point."""
-    app = create_app()
+    cfg = DevConfig()
+    app = create_app(mongo, cfg)
     app.run()
 
 

@@ -1,11 +1,21 @@
 from flask import Flask
+from flask_pymongo import PyMongo
 
-from ..controllers import all_blueprints
+from ..controllers import PaintingController
+from ..repositories import PaintingRepository
+from ..services import PaintingService
+from .config import Config
 
 
-def create_app() -> Flask:
+def get_injected_painting_controller(mongo: PyMongo) -> PaintingController:
+    """Placeholder, do this better..."""
+    return PaintingController(PaintingService(PaintingRepository(mongo.db)))
+
+
+def create_app(mongo: PyMongo, cfg: Config) -> Flask:
     """Factory for flask app."""
     app = Flask(__name__)
-    for blueprint in all_blueprints():
-        app.register_blueprint(blueprint)
+    app.config.from_object(cfg)
+    mongo.init_app(app)
+    app.register_blueprint(get_injected_painting_controller(mongo))
     return app

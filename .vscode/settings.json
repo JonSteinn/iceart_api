@@ -49,12 +49,14 @@
     ".isort.cfg": true,
     "tox.ini": true,
     "requirements-dev.txt": true,
-    "setup.py": false,
-    "README.rst": false,
+    "setup.py": true,
+    "README.rst": true,
     "README.md": true,
     "pyproject.toml": true,
     "CHANGELOG.md": true,
-    ".pre-commit-config.yaml": true
+    ".pre-commit-config.yaml": true,
+    ".env": true,
+    "scripts/": true
   },
   "restructuredtext.confPath": ""
 }

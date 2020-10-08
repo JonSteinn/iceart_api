@@ -2,20 +2,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Python: Flask",
+      "name": "Python: Main",
       "type": "python",
       "request": "launch",
-      "module": "flask",
-      "env": {
-        "FLASK_APP": "iceart.main",
-        "FLASK_ENV": "development",
-        "FLASK_DEBUG": "0"
-      },
-      "args": [
-        "run",
-        "--no-debugger"
-      ],
-      "jinja": true
+      "module": "iceart.main",
+      "console": "integratedTerminal"
     }
   ]
 }
