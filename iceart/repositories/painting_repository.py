@@ -18,4 +18,5 @@ class PaintingRepository(IPaintingRepository):  # pylint: disable=too-few-public
         self._db: Database = db
 
     def get_painting_by_id(self, painting_id: int) -> dict:
-        return {"id": painting_id}
+        answer: dict = self._db.painting.find_one_or_404({"_id": painting_id})
+        return answer

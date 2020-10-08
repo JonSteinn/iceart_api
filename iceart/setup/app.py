@@ -4,6 +4,7 @@ from flask_pymongo import PyMongo
 from ..controllers import PaintingController
 from ..repositories import PaintingRepository
 from ..services import PaintingService
+from .config import Config
 
 
 def get_injected_painting_controller(mongo: PyMongo) -> PaintingController:
@@ -11,13 +12,10 @@ def get_injected_painting_controller(mongo: PyMongo) -> PaintingController:
     return PaintingController(PaintingService(PaintingRepository(mongo.db)))
 
 
-def create_app(mongo: PyMongo) -> Flask:
+def create_app(mongo: PyMongo, cfg: Config) -> Flask:
     """Factory for flask app."""
     app = Flask(__name__)
-
-    app.config["MONGO_URI"] = "mongodb://localhost:27017/myDatabase"
+    app.config.from_object(cfg)
     mongo.init_app(app)
-
     app.register_blueprint(get_injected_painting_controller(mongo))
-
     return app
