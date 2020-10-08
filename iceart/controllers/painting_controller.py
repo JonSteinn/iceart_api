@@ -1,11 +1,11 @@
-from ..services import IPaintingService, PaintingService
+from ..services import IPaintingService
 from .base_controller import BaseController
 
 
 class PaintingController(BaseController):
     """Controller for user related requests."""
 
-    def __init__(self, user_service: IPaintingService = PaintingService()):
+    def __init__(self, user_service: IPaintingService):
         super().__init__("/painting")
         self._user_service = user_service
         self.add_route("/<int:user_id>", self.get_by_id, methods=["GET"])
