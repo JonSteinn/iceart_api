@@ -131,3 +131,4 @@ dmypy.json
 !sandbox.py
 !.vscode/launch.json
 !.vscode/settings.json
+!.env
