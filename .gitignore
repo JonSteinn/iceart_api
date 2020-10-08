@@ -130,4 +130,5 @@ dmypy.json
 
 # custom
 sandbox.py
-.vscode/
+.vscode/launch.json
+.vscode/settings.json
