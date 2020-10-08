@@ -55,7 +55,7 @@
     "pyproject.toml": true,
     "CHANGELOG.md": true,
     ".pre-commit-config.yaml": true,
-    ".env": false,
+    ".env": true,
     "scripts/": true
   },
   "restructuredtext.confPath": ""

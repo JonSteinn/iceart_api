@@ -29,7 +29,6 @@ class Config:
     # pylint: disable=too-few-public-methods
 
     STATIC_FOLDER = "static"
-    MONGO_URI = construct_mongo_uri_from_env()
 
 
 class ProdConfig(Config):
@@ -40,6 +39,7 @@ class ProdConfig(Config):
     FLASK_ENV = "production"
     DEBUG = False
     TESTING = False
+    MONGO_URI = construct_mongo_uri_from_env()
 
 
 class DevConfig(Config):
@@ -50,6 +50,7 @@ class DevConfig(Config):
     FLASK_ENV = "development"
     DEBUG = True
     TESTING = False
+    MONGO_URI = ""
 
 
 class TestingConfig(Config):
@@ -60,3 +61,4 @@ class TestingConfig(Config):
     FLASK_ENV = "development"
     DEBUG = True
     TESTING = True
+    MONGO_URI = ""
