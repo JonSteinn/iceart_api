@@ -39,7 +39,7 @@
     ".vscode/": false,
     "LICENSE": true,
     "MANIFEST.in": true,
-    ".gitignore": true,
+    ".gitignore": false,
     ".gitattribute": true,
     ".flake8": true,
     ".pylintrc": true,
@@ -55,7 +55,7 @@
     "pyproject.toml": true,
     "CHANGELOG.md": true,
     ".pre-commit-config.yaml": true,
-    ".env": true,
+    ".env": false,
     "scripts/": true
   },
   "restructuredtext.confPath": ""
