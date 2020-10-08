@@ -1,3 +1,3 @@
-from .user_controller import UserController
+from .painting_controller import PaintingController
 
-__all__ = ["UserController"]
+__all__ = ["PaintingController"]
