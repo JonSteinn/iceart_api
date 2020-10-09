@@ -38,4 +38,4 @@ class MockMongo:
         self.db = MockDatabase()
 
     def init_app(self, app):
-        pass
+        """Fake initialize app."""
