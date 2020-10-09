@@ -1,22 +1,16 @@
 import json
 
-from iceart.setup.app import create_app
-from iceart.setup.config import TestingConfig
-
-from ..mocks.mock_database import MockMongo
-
-_HEADER = {"Accept": "application/json", "Content-Type": "application/json"}
+from ..mocks.mock_app import MockApp
 
 
 def test_painting_integration_get_painting_by_id_ok():
     # Arrange
-    app = create_app(MockMongo(), TestingConfig())
+    app = MockApp()
     _id = 2
     expected = {"_id": _id, "title": "m_title2", "info": "m_info2"}
 
     # Act
-    with app.app_context(), app.test_client() as client:
-        res = client.get(f"/painting/{_id}", headers=_HEADER)
+    res = app.make_get_request(f"/painting/{_id}")
 
     # Assert
     assert res.status_code == 200
@@ -26,12 +20,11 @@ def test_painting_integration_get_painting_by_id_ok():
 
 def test_painting_integration_get_painting_by_id_not_found():
     # Arrange
-    app = create_app(MockMongo(), TestingConfig())
+    app = MockApp()
     _id = 4444
 
     # Act
-    with app.app_context(), app.test_client() as client:
-        res = client.get(f"/painting/{_id}", headers=_HEADER)
+    res = app.make_get_request(f"/painting/{_id}")
 
     # Assert
     assert res.status_code == 404
