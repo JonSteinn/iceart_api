@@ -35,7 +35,7 @@
     "README.d": true,
     "docs": true,
     "Makefile": true,
-    ".github/": false,
+    ".github/": true,
     ".vscode/": false,
     "LICENSE": true,
     "MANIFEST.in": true,
@@ -44,10 +44,10 @@
     ".flake8": true,
     ".pylintrc": true,
     "mypy.ini": true,
-    ".editorconfig": false,
+    ".editorconfig": true,
     ".travis.yml": true,
     ".isort.cfg": true,
-    "tox.ini": false,
+    "tox.ini": true,
     "requirements-dev.txt": true,
     "setup.py": true,
     "README.rst": false,
@@ -56,7 +56,10 @@
     "CHANGELOG.md": true,
     ".pre-commit-config.yaml": true,
     ".env": true,
-    "scripts/": false
+    "scripts/": true,
+    ".coverage": true,
+    ".coveragerc": true,
+    "codecov.yml": true
   },
   "restructuredtext.confPath": ""
 }
