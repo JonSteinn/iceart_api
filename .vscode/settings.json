@@ -56,7 +56,7 @@
     "CHANGELOG.md": true,
     ".pre-commit-config.yaml": true,
     ".env": true,
-    "scripts/": true
+    "scripts/": false
   },
   "restructuredtext.confPath": ""
 }
