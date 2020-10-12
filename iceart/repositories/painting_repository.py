@@ -1,22 +1,32 @@
 import abc
+from typing import List
 
 from flask_pymongo.wrappers import Database
 
+from ..models import Painting, PaintingViewModel
 
-class IPaintingRepository(abc.ABC):  # pylint: disable=too-few-public-methods
+
+class IPaintingRepository(abc.ABC):
     """Interface for painting service."""
 
     @abc.abstractmethod
-    def get_painting_by_id(self, painting_id: int) -> dict:
+    def get_painting_by_id(self, painting_vm: PaintingViewModel) -> Painting:
         """Find user by its id."""
 
+    @abc.abstractmethod
+    def get_all_paintings(self) -> List[Painting]:
+        """Get all paintings."""
 
-class PaintingRepository(IPaintingRepository):  # pylint: disable=too-few-public-methods
+
+class PaintingRepository(IPaintingRepository):
     """Painting service."""
 
     def __init__(self, db: Database):
         self._db: Database = db
 
-    def get_painting_by_id(self, painting_id: int) -> dict:
-        answer: dict = self._db.painting.find_one_or_404({"_id": painting_id})
-        return answer
+    def get_painting_by_id(self, painting_vm: PaintingViewModel) -> Painting:
+        answer: dict = self._db.painting.find_one_or_404(painting_vm.search_key())
+        return Painting(answer)
+
+    def get_all_paintings(self) -> List[Painting]:
+        return [Painting(p) for p in self._db.painting.find()]

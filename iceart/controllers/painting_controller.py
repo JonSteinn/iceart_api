@@ -1,5 +1,3 @@
-from base64 import b64decode
-
 from flask import request
 
 from ..services import IPaintingService
@@ -17,12 +15,9 @@ class PaintingController(BaseController):
 
     def get_painting_by_id(self, painting_id: int) -> dict:
         """Placeholder."""
-        return self._painting_service.get_painting_by_id(painting_id)
+        return self._painting_service.get_painting_by_id(painting_id).as_json()
 
     def upload_painting(self) -> dict:
         """Upload a jpeg image."""
-        assert self is not None
         data = request.get_json()
-        with open("uploaded.jpg", "wb") as f:
-            f.write(b64decode(data["img"]))
-        return {"msg": "very nice"}
+        return self._painting_service.get_akin_painting(data).as_json()
