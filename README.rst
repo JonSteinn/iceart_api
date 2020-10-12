@@ -2,6 +2,17 @@
 iceart
 ******
 
+|Build badge| |Test badge| |Codecov badge|
+
+.. |Build badge| image:: https://github.com/jonsteinn/iceart_api/workflows/build/badge.svg
+   :target: https://github.com/JonSteinn/iceart_api/actions?query=workflow%3Abuild
+
+.. |Test badge| image:: https://github.com/jonsteinn/iceart_api/workflows/tests/badge.svg
+   :target: https://github.com/JonSteinn/iceart_api/actions?query=workflow%3Atests
+
+.. |Codecov badge| image:: https://codecov.io/gh/jonsteinn/iceart_api/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/jonsteinn/iceart_api
+
 Dev setup
 #########
 To get started, run
@@ -16,7 +27,7 @@ You can do so using a venv if you so choose.
 To start the app, run:
 
 .. code-block:: bash
-    
+
     python -m iceart.main  # win
     python3 -m iceart.main # unix
 

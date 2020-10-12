@@ -21,6 +21,7 @@ LICENSE         text    eol=lf
 .gitattribute   text    eol=lf
 .flake8         text    eol=lf
 .pylintrc       text    eol=lf
+.coveragerc     text    eol=lf
 
 # CRLF ending text
 *.bat           text    eol=crlf

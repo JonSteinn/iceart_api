@@ -50,13 +50,16 @@
     "tox.ini": true,
     "requirements-dev.txt": true,
     "setup.py": true,
-    "README.rst": true,
+    "README.rst": false,
     "README.md": true,
     "pyproject.toml": true,
     "CHANGELOG.md": true,
     ".pre-commit-config.yaml": true,
     ".env": true,
-    "scripts/": true
+    "scripts/": true,
+    ".coverage": true,
+    ".coveragerc": true,
+    "codecov.yml": true
   },
   "restructuredtext.confPath": ""
 }
