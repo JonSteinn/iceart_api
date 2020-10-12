@@ -45,3 +45,74 @@ def test_painting_integration_get_painting_by_id_not_found():
     # Assert
     assert res.status_code == 404
     assert res.headers["Content-Type"] == "application/json"
+
+
+def test_painting_integration_upload_invalid_type():
+    # Arrange
+    app = MockApp()
+
+    # Act
+    res = app.make_post_request("/painting", "notjson")
+
+    # Assert
+    assert res.status_code == 400
+
+
+def test_painting_integration_upload_missing_field():
+    # Arrange
+    app = MockApp()
+
+    # Act
+    res = app.make_post_request("/painting", json.dumps({"not_img": "x"}))
+
+    # Assert
+    assert res.status_code == 400
+
+
+def test_painting_integration_upload_invalid_field_type():
+    # Arrange
+    app = MockApp()
+
+    # Act
+    res = app.make_post_request("/painting", json.dumps({"img": 5}))
+
+    # Assert
+    assert res.status_code == 400
+
+
+def test_painting_integration_upload_invalid_img_str_chars():
+    # Arrange
+    app = MockApp()
+
+    # Act
+    res = app.make_post_request("/painting", json.dumps({"img": "æ"}))
+
+    # Assert
+    assert res.status_code == 400
+
+
+def test_painting_integration_upload_invalid_img_str_padding():
+    # Arrange
+    app = MockApp()
+
+    # Act
+    res = app.make_post_request("/painting", json.dumps({"img": "x"}))
+
+    # Assert
+    assert res.status_code == 400
+
+
+def test_painting_integration_upload_ok():
+    # Hi
+    # I'm a placeholder
+    # Please implement me when ready
+    # Thanks
+
+    # Arrange
+    app = MockApp()
+
+    # Act
+    res = app.make_post_request("/painting", json.dumps({"img": "af=="}))
+
+    # Assert
+    assert res.status_code == 500
