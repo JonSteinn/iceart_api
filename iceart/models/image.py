@@ -10,7 +10,7 @@ class ImageViewModel:
     #  pylint: disable = too-few-public-methods
 
     def __init__(self, json_data: dict):
-        img_str = json_data.get("img", "None")
+        img_str = json_data.get("img", None)
         if img_str is None or not isinstance(img_str, str):
             raise BadRequest()
         try:
