@@ -1,1 +1,2 @@
 include iceart/py.typed
+include iceart/resource/images/.*jpg

@@ -1,21 +1,37 @@
 import json
+import os
+from pathlib import Path
+from tempfile import NamedTemporaryFile
+
+import pytest_mock
 
 from ..mocks.mock_app import MockApp
 
 
 def test_painting_integration_get_painting_by_id_ok():
     # Arrange
+    with NamedTemporaryFile("w+b", delete=False) as tmp_file:
+        tmp_file.write(b"\xaf")
+        p = Path(tmp_file.name)
     app = MockApp()
     _id = 2
-    expected = {"_id": _id, "title": "m_title2", "info": "m_info2"}
 
     # Act
-    res = app.make_get_request(f"/painting/{_id}")
+    with pytest_mock.mock.patch("pathlib.Path.joinpath", return_value=p):
+        res = app.make_get_request(f"/painting/{_id}")
 
     # Assert
     assert res.status_code == 200
     assert res.headers["Content-Type"] == "application/json"
-    assert json.loads(res.get_data(as_text=True)) == expected
+    assert json.loads(res.get_data(as_text=True)) == {
+        "id": 2,
+        "title": "m_title2",
+        "info": "m_info2",
+        "image": "rw==",
+    }
+
+    # Cleanup
+    os.remove(p)
 
 
 def test_painting_integration_get_painting_by_id_not_found():
@@ -29,3 +45,74 @@ def test_painting_integration_get_painting_by_id_not_found():
     # Assert
     assert res.status_code == 404
     assert res.headers["Content-Type"] == "application/json"
+
+
+def test_painting_integration_upload_invalid_type():
+    # Arrange
+    app = MockApp()
+
+    # Act
+    res = app.make_post_request("/painting", "notjson")
+
+    # Assert
+    assert res.status_code == 400
+
+
+def test_painting_integration_upload_missing_field():
+    # Arrange
+    app = MockApp()
+
+    # Act
+    res = app.make_post_request("/painting", json.dumps({"not_img": "x"}))
+
+    # Assert
+    assert res.status_code == 400
+
+
+def test_painting_integration_upload_invalid_field_type():
+    # Arrange
+    app = MockApp()
+
+    # Act
+    res = app.make_post_request("/painting", json.dumps({"img": 5}))
+
+    # Assert
+    assert res.status_code == 400
+
+
+def test_painting_integration_upload_invalid_img_str_chars():
+    # Arrange
+    app = MockApp()
+
+    # Act
+    res = app.make_post_request("/painting", json.dumps({"img": "æ"}))
+
+    # Assert
+    assert res.status_code == 400
+
+
+def test_painting_integration_upload_invalid_img_str_padding():
+    # Arrange
+    app = MockApp()
+
+    # Act
+    res = app.make_post_request("/painting", json.dumps({"img": "x"}))
+
+    # Assert
+    assert res.status_code == 400
+
+
+def test_painting_integration_upload_ok():
+    # Hi
+    # I'm a placeholder
+    # Please implement me when ready
+    # Thanks
+
+    # Arrange
+    app = MockApp()
+
+    # Act
+    res = app.make_post_request("/painting", json.dumps({"img": "af=="}))
+
+    # Assert
+    assert res.status_code == 500
