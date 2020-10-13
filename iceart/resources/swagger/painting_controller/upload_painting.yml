@@ -1,0 +1,21 @@
+Upload painting
+---
+tags:
+  - Painting
+parameters:
+  - in: body
+    name: body
+    required: true
+    schema:
+      id: ImageViewModel
+      properties:
+        image:
+          type: string
+          description: jpeg as a 64 byte encoded string
+responses:
+  200:
+    description: Matching painting
+    schema:
+      $ref: '#/definitions/PaintingDto'
+  404:
+    description: Invalid image

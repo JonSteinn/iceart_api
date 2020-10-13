@@ -74,7 +74,7 @@ def test_painting_integration_upload_invalid_field_type():
     app = MockApp()
 
     # Act
-    res = app.make_post_request("/painting", json.dumps({"img": 5}))
+    res = app.make_post_request("/painting", json.dumps({"image": 5}))
 
     # Assert
     assert res.status_code == 400
@@ -85,7 +85,7 @@ def test_painting_integration_upload_invalid_img_str_chars():
     app = MockApp()
 
     # Act
-    res = app.make_post_request("/painting", json.dumps({"img": "æ"}))
+    res = app.make_post_request("/painting", json.dumps({"image": "æ"}))
 
     # Assert
     assert res.status_code == 400
@@ -96,7 +96,7 @@ def test_painting_integration_upload_invalid_img_str_padding():
     app = MockApp()
 
     # Act
-    res = app.make_post_request("/painting", json.dumps({"img": "x"}))
+    res = app.make_post_request("/painting", json.dumps({"image": "x"}))
 
     # Assert
     assert res.status_code == 400
@@ -112,7 +112,7 @@ def test_painting_integration_upload_ok():
     app = MockApp()
 
     # Act
-    res = app.make_post_request("/painting", json.dumps({"img": "af=="}))
+    res = app.make_post_request("/painting", json.dumps({"image": "af=="}))
 
     # Assert
     assert res.status_code == 500

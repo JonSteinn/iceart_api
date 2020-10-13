@@ -13,23 +13,23 @@ def test_image_vm_missing_key():
 
 def test_image_vm_not_str():
     with pytest.raises(BadRequest):
-        ImageViewModel({"img": False})
+        ImageViewModel({"image": False})
 
 
 def test_image_vm_non_ascii():
     with pytest.raises(BadRequest):
-        ImageViewModel({"img": "Þ"})
+        ImageViewModel({"image": "Þ"})
 
 
 def test_image_vm_non_64base():
     with pytest.raises(BadRequest):
-        ImageViewModel({"img": "."})
+        ImageViewModel({"image": "."})
 
 
 def test_image_vm_valid():
     ImageViewModel(
         {
-            "img": "".join(
+            "image": "".join(
                 chain(
                     (chr(ord("a") + i) for i in range(26)),
                     (chr(ord("A") + i) for i in range(26)),

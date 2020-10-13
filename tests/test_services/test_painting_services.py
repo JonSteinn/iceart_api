@@ -37,7 +37,7 @@ def test_painting_service_get_akin_painting():
     service = PaintingService(MockPaintingRepository(), MockMachineLearningService())
 
     # Act
-    painting = service.get_akin_painting({"img": "/w=="})
+    painting = service.get_akin_painting({"image": "/w=="})
 
     # Assert
     assert painting.id == 5
