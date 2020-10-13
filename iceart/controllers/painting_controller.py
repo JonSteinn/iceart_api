@@ -22,6 +22,7 @@ class PaintingController(BaseController):
 
     def upload_painting(self) -> dict:
         """Upload a jpeg image.
+
         swag: iceart/resources/swagger/painting_controller/upload_painting.yml
         """
         data = request.get_json()
