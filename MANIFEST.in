@@ -1,3 +1,3 @@
 include iceart/py.typed
-include iceart/resource/images/.*jpg
-include iceart/resource/swagger/**/*.yml
+include iceart/resources/images/.*jpg
+include iceart/resources/swagger/**/*.yml
