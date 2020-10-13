@@ -14,7 +14,7 @@ class PaintingController(BaseController):
         self.add_route("", self.upload_painting, methods=["POST"])
 
     def get_painting_by_id(self, painting_id: int) -> dict:
-        """Placeholder.
+        """Get painting by id.
 
         swag: iceart/resources/swagger/painting_controller/get_painting_by_id.yml
         """
