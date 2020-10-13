@@ -54,7 +54,7 @@
     "README.md": true,
     "pyproject.toml": true,
     "CHANGELOG.md": true,
-    ".pre-commit-config.yaml": true,
+    ".pre-commit-config.yaml": false,
     ".env": true,
     "scripts/": true,
     ".coverage": true,

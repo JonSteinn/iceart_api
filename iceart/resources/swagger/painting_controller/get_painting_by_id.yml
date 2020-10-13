@@ -1,0 +1,29 @@
+Get painting by id
+---
+tags:
+  - Painting
+parameters:
+  - in: path
+    name: painting_id
+    required: true
+    description: Numeric ID of the painting to get
+responses:
+  200:
+    description: Return a painting
+    schema:
+      id: PaintingDto
+      properties:
+        id:
+          type: integer
+          description: Numeric ID of the painting
+        image:
+          type: string
+          description: Image as a 64 byte encoded jpg string
+        info:
+          type: string
+          description: Information about the painting
+        title:
+          type: string
+          description: Title of the painting
+  404:
+    description: "Painting not found"
