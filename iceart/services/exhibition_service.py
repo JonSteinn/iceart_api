@@ -27,7 +27,7 @@ class ExhibitionService(IExhibitionService):
 
     # pylint: disable=too-few-public-methods
 
-    _MAX_KM_DISTANCE = 15
+    _MAX_KM_DISTANCE = 5
 
     def __init__(self, exhibition_repository: IExhibitionRepository):
         self._exhibition_repository = exhibition_repository

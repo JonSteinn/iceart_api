@@ -34,6 +34,30 @@ _PAINTING_MOCK_DATA = {
     },
 }
 
+_EXHIBITIONN_MOCK_DATA = {
+    0: {
+        "_id": 0,
+        "title": "m_title0",
+        "info": "m_info0",
+        "latitude": 65.6826,
+        "longitude": -18.0907,
+    },
+    1: {
+        "_id": 1,
+        "title": "m_title1",
+        "info": "m_info1",
+        "latitude": 64.145265,
+        "longitude": -21.945307,
+    },
+    2: {
+        "_id": 2,
+        "title": "m_title2",
+        "info": "m_info2",
+        "latitude": 64.15046,
+        "longitude": -21.950737,
+    },
+}
+
 
 def painting_find_one_or_404(search_data):
     if "_id" not in search_data or not isinstance(search_data["_id"], int):
@@ -44,11 +68,16 @@ def painting_find_one_or_404(search_data):
 
 
 def painting_find():
-    return _PAINTING_MOCK_DATA.values()
+    return sorted(_PAINTING_MOCK_DATA.values(), key=lambda x: x["_id"])
+
+
+def exhibition_find():
+    return sorted(_EXHIBITIONN_MOCK_DATA.values(), key=lambda x: x["_id"])
 
 
 _MOCK_FIELDS = {
-    "painting": {"find_one_or_404": painting_find_one_or_404, "find": painting_find}
+    "painting": {"find_one_or_404": painting_find_one_or_404, "find": painting_find},
+    "exhibition": {"find": exhibition_find},
 }
 
 
