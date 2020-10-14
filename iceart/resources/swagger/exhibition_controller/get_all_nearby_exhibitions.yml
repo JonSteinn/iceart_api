@@ -3,10 +3,48 @@ Get all nearby exhibitions
 tags:
   - Exhibition
 parameters:
-  - in: path
-    name: painting_id
+  - in: body
+    name: body
     required: true
-    description: Numeric ID of the painting to get
+    schema:
+      id: ExhibitionViewModel
+      properties:
+        latitude:
+          type: number
+          format: double
+          description: N-S coordinate
+        longitude:
+          type: number
+          format: double
+          description: E-W coordinate
 responses:
   200:
-    description: Return a painting
+    description: Returns all nearby exhibitions
+    schema:
+      id: ExhibitionsDto
+      properties:
+        exhibitions:
+          type: array
+          items:
+            schema:
+              id: ExhibitionDto
+              properties:
+                id:
+                  type: integer
+                  description: Numeric ID of the exhibition
+                info:
+                  type: string
+                  description: Information about the exhibition
+                title:
+                  type: string
+                  description: Title of the exhibition
+                latitude:
+                  type: number
+                  format: double
+                  description: N-S coordinate
+                longitude:
+                  type: number
+                  format: double
+                  description: E-W coordinate
+  400:
+    description: Invalid request
