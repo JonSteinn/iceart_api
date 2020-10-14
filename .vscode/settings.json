@@ -50,7 +50,7 @@
     "tox.ini": true,
     "requirements-dev.txt": true,
     "setup.py": true,
-    "README.rst": false,
+    "README.rst": true,
     "README.md": true,
     "pyproject.toml": true,
     "CHANGELOG.md": true,
