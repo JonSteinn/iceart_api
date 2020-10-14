@@ -41,6 +41,7 @@ setup(
         "python-dotenv==0.14.0",
         "flask-swagger==0.2.14",
         "flask-swagger-ui==3.25.0",
+        "geopy==2.0.0",
     ],
     python_requires=">=3.7",
     include_package_data=True,

@@ -15,7 +15,7 @@ def set_server_values(swag: dict):
 def get_ui_blueprint():
     """Get Swagger UI blueprint."""
     return get_swaggerui_blueprint(
-        "",
+        "/swagger",
         "http://127.0.0.1:5000/swagger/spec.json",
         config={"app_name": "Test application"},
     )

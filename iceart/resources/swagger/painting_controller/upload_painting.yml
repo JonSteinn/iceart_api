@@ -17,5 +17,5 @@ responses:
     description: Matching painting
     schema:
       $ref: '#/definitions/PaintingDto'
-  404:
+  400:
     description: Invalid image
