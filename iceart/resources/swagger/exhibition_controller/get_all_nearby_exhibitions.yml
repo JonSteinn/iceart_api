@@ -1,0 +1,12 @@
+Get all nearby exhibitions
+---
+tags:
+  - Exhibition
+parameters:
+  - in: path
+    name: painting_id
+    required: true
+    description: Numeric ID of the painting to get
+responses:
+  200:
+    description: Return a painting
