@@ -1,6 +1,6 @@
 from typing import Iterator
 
-from flask import Flask
+from flask import Flask, Response
 from flask_pymongo import PyMongo
 from werkzeug.exceptions import HTTPException
 
@@ -22,7 +22,11 @@ def create_app(mongo: PyMongo, cfg: Config) -> Flask:
     app = Flask(__name__)
 
     app.register_error_handler(
-        Exception, lambda e: ({}, e.code if isinstance(e, HTTPException) else 500)
+        Exception,
+        lambda e: Response(
+            status=e.code if isinstance(e, HTTPException) else 500,
+            mimetype="application/json",
+        ),
     )
 
     app.config.from_object(cfg)
