@@ -1,13 +1,13 @@
 from typing import Iterator
 
-from flask import Flask, Response
+from flask import Flask
 from flask_pymongo import PyMongo
-from werkzeug.exceptions import HTTPException
 
 from ..controllers import BaseController, ExhibitionController, PaintingController
 from ..repositories import ExhibitionRepository, PaintingRepository
 from ..services import ExhibitionService, MachineLearningService, PaintingService
 from .config import Config
+from .error_handler import ErrorHandler
 
 
 def get_injected_controllers(mongo: PyMongo) -> Iterator[BaseController]:
@@ -21,15 +21,10 @@ def create_app(mongo: PyMongo, cfg: Config) -> Flask:
     """Factory for flask app."""
     app = Flask(__name__)
 
-    app.register_error_handler(
-        Exception,
-        lambda e: Response(
-            status=e.code if isinstance(e, HTTPException) else 500,
-            mimetype="application/json",
-        ),
-    )
-
     app.config.from_object(cfg)
+
+    error_handler = ErrorHandler(app.config["DEBUG"])
+    app.register_error_handler(Exception, error_handler.get_handler())
 
     mongo.init_app(app)
 

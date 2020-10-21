@@ -62,8 +62,8 @@ class ExhibitionViewModel:
         if (
             lat is None
             or lon is None
-            or not isinstance(lat, float)
-            or not isinstance(lon, float)
+            or not isinstance(lat, (int, float))
+            or not isinstance(lon, (int, float))
         ):
             raise BadRequest()
         self.latitude = lat
