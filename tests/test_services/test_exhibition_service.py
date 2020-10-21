@@ -41,6 +41,6 @@ def test_get_all_nearby_exhibitions_invalid_model():
     with pytest.raises(BadRequest):
         serv.get_all_nearby_exhibitions({"latitude": 0})
     with pytest.raises(BadRequest):
-        serv.get_all_nearby_exhibitions({"latitude": False, "longitude": 0})
+        serv.get_all_nearby_exhibitions({"latitude": "X", "longitude": 0})
     with pytest.raises(BadRequest):
         serv.get_all_nearby_exhibitions({"latitude": 0, "longitude": []})

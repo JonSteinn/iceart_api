@@ -63,7 +63,7 @@ def test_exhibition_integration_get_all_nearby_exhibitions_invalid_lat_type():
 
     # Act
     res = app.make_post_request(
-        "/exhibition", json.dumps({"latitude": False, "longitude": 0.0})
+        "/exhibition", json.dumps({"latitude": "X", "longitude": 0.0})
     )
 
     # Assert
