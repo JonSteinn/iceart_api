@@ -7,6 +7,7 @@ def main() -> None:
     cfg = DevConfig()
     app = create_app(mongo, cfg)
     swaggerify(app)
+    print("New feature added")
     app.run()
 
 
