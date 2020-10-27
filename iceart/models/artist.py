@@ -30,7 +30,7 @@ class Artist:
         self.title: str = data["title"]
         self.info: str = data["info"]
         self.file: str = data["file"]
-        self.paintings: List[int] = data["artist_id"]
+        self.paintings: List[int] = data["paintings"]
 
     @property
     def identity(self) -> int:
