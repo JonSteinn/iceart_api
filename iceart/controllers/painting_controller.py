@@ -5,7 +5,7 @@ from .base_controller import BaseController
 
 
 class PaintingController(BaseController):
-    """Controller for user related requests."""
+    """Controller for painting related requests."""
 
     def __init__(self, painting_service: IPaintingService):
         super().__init__("/painting")
