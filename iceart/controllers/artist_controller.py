@@ -10,4 +10,6 @@ class ArtistController(BaseController):
 
     def get_artist_by_id(self, artist_id: int) -> dict:
         """Get artist by id."""
+        assert self is not None
+        assert artist_id is not None
         return {}

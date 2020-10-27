@@ -1,7 +1,17 @@
 from typing import List
 
-from iceart.models import Exhibition, Painting, PaintingViewModel
-from iceart.repositories import IExhibitionRepository, IPaintingRepository
+from iceart.models import (
+    Artist,
+    ArtistViewModel,
+    Exhibition,
+    Painting,
+    PaintingViewModel,
+)
+from iceart.repositories import (
+    IArtistRepository,
+    IExhibitionRepository,
+    IPaintingRepository,
+)
 
 
 class MockPaintingRepository(IPaintingRepository):
@@ -81,3 +91,16 @@ class MockExhibitionRepository(IExhibitionRepository):
                 }
             ),
         ]
+
+
+class MockArtistRepository(IArtistRepository):
+    def get_artist_by_id(self, artist_vm: ArtistViewModel) -> Artist:
+        return Artist(
+            {
+                "_id": 22,
+                "title": "t",
+                "info": "i",
+                "file": "x.jpg",
+                "paintings": [1, 4, 8],
+            }
+        )

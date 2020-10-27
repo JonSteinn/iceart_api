@@ -1,3 +1,4 @@
+from .artist_service import ArtistService, IArtistRepository
 from .exhibition_service import ExhibitionService, IExhibitionService
 from .machine_learning_service import IMachineLearningService, MachineLearningService
 from .painting_service import IPaintingService, PaintingService
@@ -9,4 +10,6 @@ __all__ = [
     "IMachineLearningService",
     "IExhibitionService",
     "ExhibitionService",
+    "ArtistService",
+    "IArtistRepository",
 ]
