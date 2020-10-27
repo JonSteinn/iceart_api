@@ -11,7 +11,7 @@ class IPaintingRepository(abc.ABC):
 
     @abc.abstractmethod
     def get_painting_by_id(self, painting_vm: PaintingViewModel) -> Painting:
-        """Find user by its id."""
+        """Find painting by its id."""
 
     @abc.abstractmethod
     def get_all_paintings(self) -> List[Painting]:

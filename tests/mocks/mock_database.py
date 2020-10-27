@@ -34,7 +34,7 @@ _PAINTING_MOCK_DATA = {
     },
 }
 
-_EXHIBITIONN_MOCK_DATA = {
+_EXHIBITION_MOCK_DATA = {
     0: {
         "_id": 0,
         "title": "m_title0",
@@ -58,6 +58,23 @@ _EXHIBITIONN_MOCK_DATA = {
     },
 }
 
+_ARTIST_MOCK_DATA = {
+    1: {
+        "_id": 1,
+        "title": "ma_title1",
+        "info": "ma_info1",
+        "file": "rrr.jpg",
+        "paintings": [0, 2],
+    },
+    2: {
+        "_id": 2,
+        "title": "ma_title2",
+        "info": "ma_info2",
+        "file": "x132.jpg",
+        "paintings": [7],
+    },
+}
+
 
 def painting_find_one_or_404(search_data):
     if "_id" not in search_data or not isinstance(search_data["_id"], int):
@@ -71,13 +88,22 @@ def painting_find():
     return sorted(_PAINTING_MOCK_DATA.values(), key=lambda x: x["_id"])
 
 
+def artist_find_one_or_404(search_data):
+    if "_id" not in search_data or not isinstance(search_data["_id"], int):
+        raise BadRequest()
+    if search_data["_id"] not in _ARTIST_MOCK_DATA:
+        raise NotFound()
+    return _ARTIST_MOCK_DATA[search_data["_id"]]
+
+
 def exhibition_find():
-    return sorted(_EXHIBITIONN_MOCK_DATA.values(), key=lambda x: x["_id"])
+    return sorted(_EXHIBITION_MOCK_DATA.values(), key=lambda x: x["_id"])
 
 
 _MOCK_FIELDS = {
     "painting": {"find_one_or_404": painting_find_one_or_404, "find": painting_find},
     "exhibition": {"find": exhibition_find},
+    "artist": {"find_one_or_404": artist_find_one_or_404},
 }
 
 
