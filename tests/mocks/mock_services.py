@@ -36,7 +36,7 @@ PaintingDto.__init__ = old_init
 old_init = ArtistDto.__init__
 ArtistDto.__init__ = mock_artist_dto_constructor
 _FAKE_ARTIST_DTO = ArtistDto()
-PaintingDto.__init__ = old_init
+ArtistDto.__init__ = old_init
 
 
 class MockPaintingService(IPaintingService):
