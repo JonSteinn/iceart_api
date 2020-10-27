@@ -1,0 +1,29 @@
+Get artist by id
+---
+tags:
+  - Artist
+parameters:
+  - in: path
+    name: artist_id
+    required: true
+    description: Numeric ID of the artist to get
+responses:
+  200:
+    description: Return a painting
+    schema:
+      id: ArtistDto
+      properties:
+        id:
+          type: integer
+          description: Numeric ID of the artist
+        image:
+          type: string
+          description: Image as a 64 byte encoded jpg string
+        info:
+          type: string
+          description: Information about the artist
+        title:
+          type: string
+          description: Name of the artist
+  404:
+    description: "Artist not found"

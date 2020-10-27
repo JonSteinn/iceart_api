@@ -5,7 +5,7 @@ from ..repositories import IArtistRepository
 
 
 class IArtistService(abc.ABC):
-    """Interface for painting service."""
+    """Interface for artist service."""
 
     # pylint: disable=too-few-public-methods
 
@@ -15,7 +15,7 @@ class IArtistService(abc.ABC):
 
 
 class ArtistService(IArtistService):
-    """Painting service."""
+    """Artist service."""
 
     # pylint: disable=too-few-public-methods
 
