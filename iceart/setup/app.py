@@ -3,9 +3,19 @@ from typing import Iterator
 from flask import Flask
 from flask_pymongo import PyMongo
 
-from ..controllers import BaseController, ExhibitionController, PaintingController
-from ..repositories import ExhibitionRepository, PaintingRepository
-from ..services import ExhibitionService, MachineLearningService, PaintingService
+from ..controllers import (
+    ArtistController,
+    BaseController,
+    ExhibitionController,
+    PaintingController,
+)
+from ..repositories import ArtistRepository, ExhibitionRepository, PaintingRepository
+from ..services import (
+    ArtistService,
+    ExhibitionService,
+    MachineLearningService,
+    PaintingService,
+)
 from .config import Config
 from .error_handler import ErrorHandler
 
@@ -15,6 +25,7 @@ def get_injected_controllers(mongo: PyMongo) -> Iterator[BaseController]:
     p_repo = PaintingRepository(mongo.db)
     yield PaintingController(PaintingService(p_repo, MachineLearningService(p_repo)))
     yield ExhibitionController(ExhibitionService(ExhibitionRepository(mongo.db)))
+    yield ArtistController(ArtistService(ArtistRepository(mongo.db)))
 
 
 def create_app(mongo: PyMongo, cfg: Config) -> Flask:

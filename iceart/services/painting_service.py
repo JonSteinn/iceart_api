@@ -12,7 +12,7 @@ class IPaintingService(abc.ABC):
 
     @abc.abstractmethod
     def get_painting_by_id(self, painting_id: int) -> PaintingDto:
-        """Find user by its id."""
+        """Find artist by its id."""
 
     @abc.abstractmethod
     def get_akin_painting(self, data: dict) -> PaintingDto:

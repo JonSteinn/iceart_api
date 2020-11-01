@@ -1,4 +1,5 @@
 from iceart.models import (
+    ArtistDto,
     Exhibition,
     ExhibitionDto,
     ExhibitionsDto,
@@ -6,6 +7,7 @@ from iceart.models import (
     PaintingDto,
 )
 from iceart.services import (
+    IArtistService,
     IExhibitionService,
     IMachineLearningService,
     IPaintingService,
@@ -19,23 +21,40 @@ def mock_painting_dto_constructor(self):
     self.image = "img"
 
 
+def mock_artist_dto_constructor(self):
+    self.id = 665
+    self.title = "t"
+    self.info = "i"
+    self.image = "img"
+
+
 old_init = PaintingDto.__init__
 PaintingDto.__init__ = mock_painting_dto_constructor
-_FAKE_DTO = PaintingDto()
+_FAKE_PAINTING_DTO = PaintingDto()
 PaintingDto.__init__ = old_init
+
+old_init = ArtistDto.__init__
+ArtistDto.__init__ = mock_artist_dto_constructor
+_FAKE_ARTIST_DTO = ArtistDto()
+ArtistDto.__init__ = old_init
 
 
 class MockPaintingService(IPaintingService):
     def get_painting_by_id(self, painting_id: int) -> PaintingDto:
-        return _FAKE_DTO
+        return _FAKE_PAINTING_DTO
 
     def get_akin_painting(self, data: dict) -> PaintingDto:
-        return _FAKE_DTO
+        return _FAKE_PAINTING_DTO
+
+
+class MockArtistService(IArtistService):
+    def get_artist_by_id(self, artist_id: int) -> ArtistDto:
+        return _FAKE_ARTIST_DTO
 
 
 class MockMachineLearningService(IMachineLearningService):
     def get_most_smilar_painting(self, image_vm: ImageViewModel) -> PaintingDto:
-        return _FAKE_DTO
+        return _FAKE_PAINTING_DTO
 
 
 class MockExhibitionService(IExhibitionService):
