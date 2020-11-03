@@ -19,11 +19,14 @@ responses:
         image:
           type: string
           description: Image as a 64 byte encoded jpg string
-        info:
+        technique:
           type: string
-          description: Information about the painting
+          description: The painting technique
         title:
           type: string
           description: Title of the painting
+        year:
+          type: integer
+          description: Year when painted
   404:
     description: "Painting not found"

@@ -26,8 +26,9 @@ def test_painting_integration_get_painting_by_id_ok():
     assert json.loads(res.get_data(as_text=True)) == {
         "id": 2,
         "title": "m_title2",
-        "info": "m_info2",
+        "technique": "m_technique2",
         "image": "rw==",
+        "year": 2019,
     }
 
     # Cleanup

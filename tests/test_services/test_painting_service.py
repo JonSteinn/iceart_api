@@ -25,8 +25,9 @@ def test_painting_service_get_painting_by_id():
     # Assert
     assert response.id == _id
     assert response.title == "m_title"
-    assert response.info == "m_info"
+    assert response.technique == "m_technique"
     assert response.image == "/w=="
+    assert response.year == 2007
 
     # Cleanup
     os.remove(p)
