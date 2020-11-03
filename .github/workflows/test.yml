@@ -28,10 +28,10 @@ jobs:
             toxenv: py38
             os: ubuntu-latest
           - python: 3.8
-            toxenv: py39
+            toxenv: py38
             os: macos-latest
           - python: 3.8
-            toxenv: py39
+            toxenv: py38
             os: windows-latest
 
     runs-on: ${{ matrix.os }}
