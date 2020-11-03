@@ -29,6 +29,7 @@ def test_painting_integration_get_painting_by_id_ok():
         "technique": "m_technique2",
         "image": "rw==",
         "year": 2019,
+        "artist": 1,
     }
 
     # Cleanup
