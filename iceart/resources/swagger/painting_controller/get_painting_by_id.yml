@@ -28,5 +28,8 @@ responses:
         year:
           type: integer
           description: Year when painted
+        artist:
+          type: integer
+          description: Id of artist
   404:
     description: "Painting not found"

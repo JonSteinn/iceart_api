@@ -66,12 +66,14 @@ def test_painting_dto_init():
     assert dto.title == "t"
     assert dto.technique == "t"
     assert dto.year == -1
+    assert dto.artist == 3
     assert dto.as_json() == {
         "id": 17,
         "image": "rw==",
         "title": "t",
         "technique": "t",
         "year": -1,
+        "artist": 3,
     }
 
     # Cleanup
