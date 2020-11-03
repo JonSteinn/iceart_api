@@ -19,9 +19,10 @@ def test_painting_repository_get_painting_by_id_success():
     # Assert
     assert response.identity == _id
     assert response.title == "m_title7"
-    assert response.info == "m_info7"
+    assert response.technique == "m_technique7"
     assert response.artist_id == 2
     assert response.file == "f133.jpg"
+    assert response.year == -1
 
 
 def test_painting_repository_get_painting_by_id_not_found():

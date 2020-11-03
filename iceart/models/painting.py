@@ -26,9 +26,10 @@ class Painting:
     def __init__(self, data: dict):
         self._id: int = data["_id"]
         self.title: str = data["title"]
-        self.info: str = data["info"]
         self.artist_id: int = data["artist_id"]
         self.file: str = data["file"]
+        self.technique: str = data["technique"]
+        self.year: int = data["year"]
 
     @property
     def identity(self) -> int:
@@ -44,7 +45,8 @@ class PaintingDto:
     def __init__(self, painting: Painting):
         self.id = painting.identity  # pylint: disable=invalid-name
         self.title = painting.title
-        self.info = painting.info
+        self.technique = painting.technique
+        self.year = painting.year
         self.image = get_image_as_base64_string(painting.file)
 
     def as_json(self) -> dict:

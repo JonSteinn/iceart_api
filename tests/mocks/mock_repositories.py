@@ -21,9 +21,10 @@ class MockPaintingRepository(IPaintingRepository):
             {
                 "_id": painting_vm._id,
                 "title": "m_title",
-                "info": "m_info",
+                "technique": "m_technique",
                 "artist_id": 44,
                 "file": "idfka",
+                "year": 2007,
             }
         )
 
@@ -34,18 +35,20 @@ class MockPaintingRepository(IPaintingRepository):
                 {
                     "_id": 4,
                     "title": "m_title4",
-                    "info": "m_info4",
+                    "technique": "m_technique4",
                     "artist_id": 123,
                     "file": "idfka4",
+                    "year": -1,
                 }
             ),
             Painting(
                 {
                     "_id": 77,
                     "title": "m_title77",
-                    "info": "m_info77",
+                    "technique": "m_technique77",
                     "artist_id": 1361,
                     "file": "idfka77",
+                    "year": 2013,
                 }
             ),
         ]

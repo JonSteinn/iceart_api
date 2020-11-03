@@ -20,7 +20,14 @@ def test_painting_vm_search_key():
 
 def test_painting_init():
     # Arrange
-    data = {"_id": 17, "title": "t", "info": "i", "artist_id": 3, "file": "f"}
+    data = {
+        "_id": 17,
+        "title": "t",
+        "technique": "t",
+        "artist_id": 3,
+        "file": "f",
+        "year": 1999,
+    }
 
     # Act
     model = Painting(data)
@@ -28,14 +35,22 @@ def test_painting_init():
     # Assert
     assert model.identity == 17
     assert model.title == "t"
-    assert model.info == "i"
+    assert model.technique == "t"
+    assert model.year == 1999
     assert model.artist_id == 3
     assert model.file == "f"
 
 
 def test_painting_dto_init():
     # Arrange
-    data = {"_id": 17, "title": "t", "info": "i", "artist_id": 3, "file": "f"}
+    data = {
+        "_id": 17,
+        "title": "t",
+        "technique": "t",
+        "artist_id": 3,
+        "file": "f",
+        "year": -1,
+    }
     model = Painting(data)
     with NamedTemporaryFile("w+b", delete=False) as tmp_file:
         tmp_file.write(b"\xaf")
@@ -49,8 +64,15 @@ def test_painting_dto_init():
     assert dto.image == "rw=="
     assert dto.id == 17
     assert dto.title == "t"
-    assert dto.info == "i"
-    assert dto.as_json() == {"id": 17, "image": "rw==", "title": "t", "info": "i"}
+    assert dto.technique == "t"
+    assert dto.year == -1
+    assert dto.as_json() == {
+        "id": 17,
+        "image": "rw==",
+        "title": "t",
+        "technique": "t",
+        "year": -1,
+    }
 
     # Cleanup
     os.remove(p)
