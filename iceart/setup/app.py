@@ -1,6 +1,7 @@
 from typing import Iterator
 
 from flask import Flask
+from flask_caching import Cache
 from flask_pymongo import PyMongo
 
 from ..controllers import (
@@ -20,12 +21,14 @@ from .config import Config
 from .error_handler import ErrorHandler
 
 
-def get_injected_controllers(mongo: PyMongo) -> Iterator[BaseController]:
+def get_injected_controllers(mongo: PyMongo, cache: Cache) -> Iterator[BaseController]:
     """Placeholder, do this better..."""
-    p_repo = PaintingRepository(mongo.db)
+    p_repo = PaintingRepository(mongo.db, cache)
+    e_repo = ExhibitionRepository(mongo.db, cache)
+    a_repo = ArtistRepository(mongo.db, cache)
     yield PaintingController(PaintingService(p_repo, MachineLearningService(p_repo)))
-    yield ExhibitionController(ExhibitionService(ExhibitionRepository(mongo.db)))
-    yield ArtistController(ArtistService(ArtistRepository(mongo.db)))
+    yield ExhibitionController(ExhibitionService(e_repo))
+    yield ArtistController(ArtistService(a_repo))
 
 
 def create_app(mongo: PyMongo, cfg: Config) -> Flask:
@@ -39,7 +42,9 @@ def create_app(mongo: PyMongo, cfg: Config) -> Flask:
 
     mongo.init_app(app)
 
-    for blueprint in get_injected_controllers(mongo):
+    cache = Cache(app)
+
+    for blueprint in get_injected_controllers(mongo, cache):
         app.register_blueprint(blueprint)
 
     return app

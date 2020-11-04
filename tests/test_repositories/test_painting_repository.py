@@ -4,6 +4,7 @@ from werkzeug.exceptions import NotFound
 from iceart.models import PaintingViewModel
 from iceart.repositories import PaintingRepository
 
+from ..mocks.mock_cache import MockCache
 from ..mocks.mock_database import MockDatabase
 
 
@@ -11,10 +12,11 @@ def test_painting_repository_get_painting_by_id_success():
     # Arrange
     _id = 7
     vm = PaintingViewModel(_id)
-    repo = PaintingRepository(MockDatabase())
+    repo = PaintingRepository(MockDatabase(), MockCache())
 
     # Act
     response = repo.get_painting_by_id(vm)
+    cached_response = repo.get_painting_by_id(vm)
 
     # Assert
     assert response.identity == _id
@@ -23,12 +25,18 @@ def test_painting_repository_get_painting_by_id_success():
     assert response.artist_id == 2
     assert response.file == "f133.jpg"
     assert response.year == -1
+    assert cached_response.identity == _id
+    assert cached_response.title == "m_title7"
+    assert cached_response.technique == "m_technique7"
+    assert cached_response.artist_id == 2
+    assert cached_response.file == "f133.jpg"
+    assert cached_response.year == -1
 
 
 def test_painting_repository_get_painting_by_id_not_found():
     # Arrange
     _id = 2222
-    repo = PaintingRepository(MockDatabase())
+    repo = PaintingRepository(MockDatabase(), MockCache())
     vm = PaintingViewModel(_id)
 
     # Act
@@ -40,7 +48,7 @@ def test_painting_repository_get_painting_by_id_not_found():
 
 def test_painting_repository_get_all_paintings():
     # Arrange
-    repo = PaintingRepository(MockDatabase())
+    repo = PaintingRepository(MockDatabase(), MockCache())
 
     # Act
     allSorted = sorted(repo.get_all_paintings(), key=lambda p: p.identity)

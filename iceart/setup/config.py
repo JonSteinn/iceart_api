@@ -24,6 +24,8 @@ class Config:
 
     STATIC_FOLDER = "static"
     MONGO_URI = construct_mongo_uri_from_env()
+    CACHE_TYPE = "simple"
+    CACHE_DEFAULT_TIMEOUT = 3600
 
 
 class ProdConfig(Config):

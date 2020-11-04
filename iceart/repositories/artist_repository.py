@@ -1,8 +1,10 @@
 import abc
 
+from flask_caching import Cache
 from flask_pymongo.wrappers import Database
 
 from ..models import Artist, ArtistViewModel
+from ..utils import CacheKeyManager
 
 
 class IArtistRepository(abc.ABC):
@@ -20,9 +22,14 @@ class ArtistRepository(IArtistRepository):
 
     # pylint: disable=too-few-public-methods
 
-    def __init__(self, db: Database):
+    def __init__(self, db: Database, cache: Cache):
         self._db: Database = db
+        self._cache: Cache = cache
 
     def get_artist_by_id(self, artist_vm: ArtistViewModel) -> Artist:
-        answer: dict = self._db.artist.find_one_or_404(artist_vm.search_key())
+        cache_key = CacheKeyManager.artist_id_cache_key(artist_vm.identity)
+        answer: dict = self._cache.get(cache_key)
+        if answer is None:
+            answer = self._db.artist.find_one_or_404(artist_vm.search_key())
+            self._cache.set(cache_key, answer)
         return Artist(answer)
