@@ -8,7 +8,7 @@ from ..utils import get_image_as_base64_string
 class ArtistViewModel:
     """Model for artists as they arrive from client."""
 
-    #  pylint: disable = too-few-public-methods
+    # pylint: disable = duplicate-code
 
     def __init__(self, artist_id: int):
         if artist_id < 0:
@@ -18,6 +18,12 @@ class ArtistViewModel:
     def search_key(self) -> dict:
         """Get the model as a search key for mongo."""
         return self.__dict__
+
+    @property
+    def identity(self) -> int:
+        """Getter for id."""
+
+        return self._id
 
 
 class Artist:
