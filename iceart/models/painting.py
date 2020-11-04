@@ -17,6 +17,11 @@ class PaintingViewModel:
         """Get the model as a search key for mongo."""
         return self.__dict__
 
+    @property
+    def identity(self) -> int:
+        """Getter for id."""
+        return self._id
+
 
 class Painting:
     """Model for paintings as they are stored in the db."""
