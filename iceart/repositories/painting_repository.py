@@ -43,11 +43,4 @@ class PaintingRepository(IPaintingRepository):
         return [Painting(p) for p in self._db.painting.find()]
 
     def get_paintings_by_ids(self, ids: Iterable[int]) -> List[Painting]:
-        cache_key = CacheKeyManager.artist_paintings_cache_key(ids)
-        answer: List[Painting] = self._cache.get(cache_key)
-        if answer is None:
-            answer = [
-                Painting(p) for p in self._db.painting.find({"_id": {"$in": ids}})
-            ]
-            self._cache.set(cache_key, answer)
-        return answer
+        return [Painting(p) for p in self._db.painting.find({"_id": {"$in": ids}})]

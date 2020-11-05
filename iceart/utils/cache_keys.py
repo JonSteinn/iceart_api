@@ -1,6 +1,3 @@
-from typing import Iterable
-
-
 class CacheKeyManager:
     """Handles generating cache keys."""
 
@@ -31,7 +28,6 @@ class CacheKeyManager:
         return CacheKeyManager._ML_PREPEND
 
     @staticmethod
-    def artist_paintings_cache_key(identities: Iterable[int]) -> str:
+    def artist_paintings_cache_key(identity: int) -> str:
         """Get a unique hash key for artist's paintings."""
-        identities_str = "_".join(str(i) for i in identities)
-        return f"{CacheKeyManager._ARTIST_PAINTINGS_PREPEND}{identities_str}"
+        return f"{CacheKeyManager._ARTIST_PAINTINGS_PREPEND}{identity}"

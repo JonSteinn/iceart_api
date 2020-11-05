@@ -16,9 +16,16 @@ def test_artist_integration_get_artist_by_id_ok():
     app = MockApp()
     _id = 2
 
+    class M:
+        def tostring(self):
+            return b"\xff\xd8"
+
     # Act
     with pytest_mock.mock.patch("pathlib.Path.joinpath", return_value=p):
-        res = app.make_get_request(f"/artist/{_id}")
+        with pytest_mock.mock.patch("cv2.imread", return_value=None):
+            with pytest_mock.mock.patch("cv2.resize", return_value=None):
+                with pytest_mock.mock.patch("cv2.imencode", return_value=(None, M())):
+                    res = app.make_get_request(f"/artist/{_id}")
 
     # Assert
     assert res.status_code == 200
@@ -28,6 +35,7 @@ def test_artist_integration_get_artist_by_id_ok():
         "title": "ma_title2",
         "info": "ma_info2",
         "image": "rw==",
+        "paintings": {"7": "/9g="},
     }
 
     # Cleanup

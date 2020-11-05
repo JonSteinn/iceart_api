@@ -30,7 +30,7 @@ def get_injected_controllers(mongo: PyMongo, cache: Cache) -> Iterator[BaseContr
         PaintingService(p_repo, MachineLearningService(p_repo, cache))
     )
     yield ExhibitionController(ExhibitionService(e_repo))
-    yield ArtistController(ArtistService(a_repo))
+    yield ArtistController(ArtistService(a_repo, p_repo, cache))
 
 
 def create_app(mongo: PyMongo, cfg: Config) -> Flask:

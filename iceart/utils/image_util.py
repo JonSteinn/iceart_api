@@ -1,9 +1,21 @@
+import base64
+
 import cv2
 import imagehash
 import numpy as np
 
 _HASH_SIZE = 128
 _MOST_DIFF = _HASH_SIZE ** 2
+_THUMBNAIL_DIM = (100, 100)
+
+
+def get_image_as_thumbnail(img_path: str) -> str:
+    """Scale image to thumbnail size."""
+    src = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
+    resized = cv2.resize(src, _THUMBNAIL_DIM)
+    jpg = cv2.imencode(".jpg", resized)[1].tostring()
+    b64 = base64.b64encode(jpg)
+    return b64.decode("ascii")
 
 
 def create_image_hash(img: np.ndarray) -> np.ndarray:
