@@ -4,6 +4,7 @@ class CacheKeyManager:
     _PAINTING_PREPEND = "p"
     _ARTIST_PREPEND = "a"
     _EXHIBITIONS_PREPEND = "e"
+    _ML_PREPEND = "m"
 
     @staticmethod
     def painting_id_cache_key(identity: int) -> str:
@@ -19,3 +20,8 @@ class CacheKeyManager:
     def exhibitions_cache_key() -> str:
         """Get a unique hash key all exhibitions."""
         return CacheKeyManager._EXHIBITIONS_PREPEND
+
+    @staticmethod
+    def ml_cache_key() -> str:
+        """Get a unique hash key all ml hashes."""
+        return CacheKeyManager._ML_PREPEND
