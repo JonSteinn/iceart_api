@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Union
 
 from werkzeug.exceptions import NotFound
 
@@ -49,7 +49,7 @@ class ArtistDto:
 
     #  pylint: disable = too-few-public-methods
 
-    def __init__(self, artist: Artist, thumbnails: Dict[int, str]):
+    def __init__(self, artist: Artist, thumbnails: List[Dict[str, Union[int, str]]]):
         self.id = artist.identity  # pylint: disable=invalid-name
         self.title = artist.title
         self.info = artist.info
