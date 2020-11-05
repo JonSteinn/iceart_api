@@ -43,7 +43,7 @@ class MachineLearningService(IMachineLearningService):
             answer = dict()
             for painting in self._painting_repository.get_all_paintings():
                 img = Image.open(get_image_path(painting.file).as_posix())
-                answer[painting.identity()] = create_image_hash(img)
+                answer[painting.identity] = create_image_hash(img)
             self._cache.set(cache_key, answer)
         return answer
 
@@ -55,7 +55,7 @@ class MachineLearningService(IMachineLearningService):
         best = -1
         best_value = get_most_difference()
         hash_list = self._all_hash()
-        for k, h in hash_list:
+        for k, h in hash_list.items():
             if best_value > np.count_nonzero(h != hash_image):
                 best = k
         fake_vm = PaintingViewModel(best)
