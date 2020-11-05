@@ -1,12 +1,12 @@
 import abc
-from os import listdir
 
 import cv2
 import imagehash
 import numpy as np
 
-from ..models import ImageViewModel, PaintingDto
+from ..models import ImageViewModel, PaintingDto, PaintingViewModel
 from ..repositories import IPaintingRepository
+from ..utils import get_image_path
 
 
 class IMachineLearningService(abc.ABC):
@@ -27,12 +27,12 @@ class MachineLearningService(IMachineLearningService):
     def __init__(self, painting_repository: IPaintingRepository):
         self._painting_repository = painting_repository
         self.HASH_SIZE = 128
-        self.MOST_DIFF = self.MOST_DIFF * self.MOST_DIFF
+        self.MOST_DIFF = self.HASH_SIZE * self.HASH_SIZE
         self.hash_list = dict()
 
-        for f in listdir("../resources/images/"):
-            img = cv2.imread(f)
-            self.hash_list[f[:-4]] = (
+        for p in self._painting_repository.get_all_paintings():
+            img = cv2.imread(get_image_path(p.file))
+            self.hash_list[p._id] = (
                 imagehash.phash(img, self.HASH_SIZE).hash
                 + imagehash.whash(img, self.HASH_SIZE).hash
             )
@@ -128,10 +128,10 @@ class MachineLearningService(IMachineLearningService):
             imagehash.phash(image, self.HASH_SIZE).hash
             + imagehash.whash(image, self.HASH_SIZE).hash
         )
-        best = None
+        best = -1
         best_value = self.MOST_DIFF
-        for img in self.hash_list:
-            if best_value > np.count_nonzero(self.hash_list[img] != hash_image):
-                best = img
-        # call api for best
-        raise NotImplementedError()
+        for p in self.hash_list:
+            if best_value > np.count_nonzero(self.hash_list[p] != hash_image):
+                best = p
+        fake_vm = PaintingViewModel(best)
+        return PaintingDto(self._painting_repository.get_painting_by_id(fake_vm))
