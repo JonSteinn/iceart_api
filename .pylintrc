@@ -9,3 +9,6 @@ good-names=i,j,n,k,x,y,w,h,f,_
 
 [SIMILARITIES]
 ignore-imports=yes
+
+[TYPECHECK]
+ignored-modules=cv2
