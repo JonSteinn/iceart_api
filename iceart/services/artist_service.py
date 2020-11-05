@@ -40,12 +40,15 @@ class ArtistService(IArtistService):
             model = ArtistViewModel(artist_id)
             artist = self._artist_repository.get_artist_by_id(model)
             paintings = self._painting_repository.get_paintings_by_ids(artist.paintings)
-            thumbnails = {
-                painting.identity: get_image_as_thumbnail(
-                    get_image_path(painting.file).as_posix()
-                )
+            thumbnails = [
+                {
+                    "id": painting.identity,
+                    "image": get_image_as_thumbnail(
+                        get_image_path(painting.file).as_posix()
+                    ),
+                }
                 for painting in paintings
-            }
+            ]
             answer = ArtistDto(artist, thumbnails)
             self._cache.set(cache_key, answer)
         return answer

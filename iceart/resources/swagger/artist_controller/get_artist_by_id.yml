@@ -26,7 +26,14 @@ responses:
           type: string
           description: Name of the artist
         paintings:
-          type: object
+          type: array
           description: Thumbnail and ids of paintings
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              image:
+                type: string
   404:
     description: "Artist not found"
