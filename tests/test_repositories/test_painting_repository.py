@@ -55,3 +55,16 @@ def test_painting_repository_get_all_paintings():
 
     # Assert
     assert [p.identity for p in allSorted] == [0, 2, 7]
+
+
+def test_painting_repository_get_all_paintings_by_ids():
+    # Arrange
+    repo = PaintingRepository(MockDatabase(), MockCache())
+
+    # Act
+    multiple = repo.get_paintings_by_ids([0, 7])
+    cached = repo.get_paintings_by_ids([0, 7])
+
+    # Assert
+    assert {p.identity for p in multiple} == {0, 7}
+    assert {p.identity for p in cached} == {0, 7}

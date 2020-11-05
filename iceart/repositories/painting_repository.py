@@ -1,5 +1,5 @@
 import abc
-from typing import List
+from typing import Iterable, List
 
 from flask_caching import Cache
 from flask_pymongo.wrappers import Database
@@ -19,6 +19,10 @@ class IPaintingRepository(abc.ABC):
     def get_all_paintings(self) -> List[Painting]:
         """Get all paintings."""
 
+    @abc.abstractmethod
+    def get_paintings_by_ids(self, ids: Iterable[int]) -> List[Painting]:
+        """Get all paintings with one of the provided ids"""
+
 
 class PaintingRepository(IPaintingRepository):
     """Painting service."""
@@ -37,3 +41,13 @@ class PaintingRepository(IPaintingRepository):
 
     def get_all_paintings(self) -> List[Painting]:
         return [Painting(p) for p in self._db.painting.find()]
+
+    def get_paintings_by_ids(self, ids: Iterable[int]) -> List[Painting]:
+        cache_key = CacheKeyManager.artist_paintings_cache_key(ids)
+        answer: List[Painting] = self._cache.get(cache_key)
+        if answer is None:
+            answer = [
+                Painting(p) for p in self._db.painting.find({"_id": {"$in": ids}})
+            ]
+            self._cache.set(cache_key, answer)
+        return answer
