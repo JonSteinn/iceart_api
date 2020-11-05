@@ -26,7 +26,9 @@ def get_injected_controllers(mongo: PyMongo, cache: Cache) -> Iterator[BaseContr
     p_repo = PaintingRepository(mongo.db, cache)
     e_repo = ExhibitionRepository(mongo.db, cache)
     a_repo = ArtistRepository(mongo.db, cache)
-    yield PaintingController(PaintingService(p_repo, MachineLearningService(p_repo)))
+    yield PaintingController(
+        PaintingService(p_repo, MachineLearningService(p_repo, cache))
+    )
     yield ExhibitionController(ExhibitionService(e_repo))
     yield ArtistController(ArtistService(a_repo))
 
