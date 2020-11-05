@@ -56,7 +56,9 @@ class MachineLearningService(IMachineLearningService):
         best_value = get_most_difference()
         hash_list = self._all_hash()
         for k, h in hash_list.items():
-            if best_value > np.count_nonzero(h != hash_image):
+            curr_val = np.count_nonzero(h != hash_image)
+            if best_value > curr_val:
                 best = k
+                best_value = curr_val
         fake_vm = PaintingViewModel(best)
         return PaintingDto(self._painting_repository.get_painting_by_id(fake_vm))
