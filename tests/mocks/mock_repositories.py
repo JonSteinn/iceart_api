@@ -1,4 +1,4 @@
-from typing import List
+from typing import Iterable, List
 
 from iceart.models import (
     Artist,
@@ -52,6 +52,9 @@ class MockPaintingRepository(IPaintingRepository):
                 }
             ),
         ]
+
+    def get_paintings_by_ids(self, ids: Iterable[int]) -> List[Painting]:
+        return self.get_all_paintings()
 
 
 class MockExhibitionRepository(IExhibitionRepository):

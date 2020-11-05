@@ -87,7 +87,14 @@ def painting_find_one_or_404(search_data):
     return _PAINTING_MOCK_DATA[search_data["_id"]]
 
 
-def painting_find():
+def painting_find(*args):
+    if args:
+        if "_id" in args[0] and "$in" in args[0]["_id"]:
+            filtered_ids = set(args[0]["_id"]["$in"])
+            return sorted(
+                (v for k, v in _PAINTING_MOCK_DATA.items() if k in filtered_ids),
+                key=lambda x: x["_id"],
+            )
     return sorted(_PAINTING_MOCK_DATA.values(), key=lambda x: x["_id"])
 
 
