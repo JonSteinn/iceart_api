@@ -13,7 +13,7 @@ def create_image_hash(img: np.ndarray) -> np.ndarray:
 
 def get_most_difference() -> int:
     """The maximum number of difference in a hash compare array."""
-    return _HASH_DIFF
+    return _MOST_DIFF
 
 
 def crop_image(img: bytes) -> np.ndarray:

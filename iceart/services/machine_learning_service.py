@@ -5,7 +5,7 @@ import numpy as np
 
 from ..models import ImageViewModel, PaintingDto, PaintingViewModel
 from ..repositories import IPaintingRepository
-from ..utils import create_image_hash, crop_image, get_most_difference, get_image_path
+from ..utils import create_image_hash, crop_image, get_image_path, get_most_difference
 
 
 class IMachineLearningService(abc.ABC):
@@ -25,8 +25,6 @@ class MachineLearningService(IMachineLearningService):
 
     def __init__(self, painting_repository: IPaintingRepository):
         self._painting_repository = painting_repository
-        self.HASH_SIZE = 128
-        self.MOST_DIFF = self.HASH_SIZE * self.HASH_SIZE
         self.hash_list = dict()
 
         for p in self._painting_repository.get_all_paintings():
