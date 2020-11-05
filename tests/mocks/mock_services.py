@@ -53,7 +53,7 @@ class MockArtistService(IArtistService):
 
 
 class MockMachineLearningService(IMachineLearningService):
-    def get_most_smilar_painting(self, image_vm: ImageViewModel) -> PaintingDto:
+    def get_most_similar_painting(self, image_vm: ImageViewModel) -> PaintingDto:
         return _FAKE_PAINTING_DTO
 
 

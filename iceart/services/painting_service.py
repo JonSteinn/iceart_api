@@ -39,4 +39,4 @@ class PaintingService(IPaintingService):
 
     def get_akin_painting(self, data: dict) -> PaintingDto:
         model = ImageViewModel(data)
-        return self._ml_service.get_most_smilar_painting(model)
+        return self._ml_service.get_most_similar_painting(model)

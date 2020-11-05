@@ -7,6 +7,7 @@
   "python.testing.pytestEnabled": true,
   "python.linting.mypyEnabled": true,
   "python.linting.pylintEnabled": true,
+  "python.linting.pylintArgs": ["--extension-pkg-whitelist=cv2", "--generated-members=cv2.*"],
   "python.linting.flake8Enabled": true,
   "python.linting.enabled": true,
   "python.linting.lintOnSave": true,
