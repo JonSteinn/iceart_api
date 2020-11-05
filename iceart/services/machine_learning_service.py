@@ -1,9 +1,9 @@
 import abc
-import base64
 
 import cv2
 import numpy as np
 from flask_caching import Cache
+from PIL import Image
 
 from ..models import ImageViewModel, PaintingDto, PaintingViewModel
 from ..repositories import IPaintingRepository
@@ -42,18 +42,16 @@ class MachineLearningService(IMachineLearningService):
         if answer is None:
             answer = dict()
             for painting in self._painting_repository.get_all_paintings():
-                img = cv2.imread(get_image_path(painting.file).as_posix())
+                img = Image.open(get_image_path(painting.file).as_posix())
                 answer[painting.identity()] = create_image_hash(img)
             self._cache.set(cache_key, answer)
         return answer
 
     def get_most_similar_painting(self, image_vm: ImageViewModel) -> PaintingDto:
         """Return most similar painting"""
-        im_bytes = base64.b64decode(image_vm.image)
-        im_arr = np.frombuffer(im_bytes, dtype=np.uint8)
+        im_arr = np.frombuffer(image_vm.image, dtype=np.uint8)
         image = cv2.imdecode(im_arr, flags=cv2.IMREAD_COLOR)
-        image = crop_image(image)
-        hash_image = create_image_hash(image)
+        hash_image = create_image_hash(Image.fromarray(crop_image(image)))
         best = -1
         best_value = get_most_difference()
         hash_list = self._all_hash()
