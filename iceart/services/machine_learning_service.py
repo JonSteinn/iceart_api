@@ -1,4 +1,5 @@
 import abc
+import base64
 
 import cv2
 import numpy as np
@@ -48,7 +49,10 @@ class MachineLearningService(IMachineLearningService):
 
     def get_most_similar_painting(self, image_vm: ImageViewModel) -> PaintingDto:
         """Return most similar painting"""
-        image = crop_image(image_vm.image)
+        im_bytes = base64.b64decode(image_vm.image)
+        im_arr = np.frombuffer(im_bytes, dtype=np.uint8)
+        image = cv2.imdecode(im_arr, flags=cv2.IMREAD_COLOR)
+        image = crop_image(image)
         hash_image = create_image_hash(image)
         best = -1
         best_value = get_most_difference()
