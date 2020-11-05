@@ -12,4 +12,10 @@ def test_painting_controller_get_painting_by_id():
     response = controller.get_artist_by_id(_id)
 
     # Assert
-    assert response == {"id": 665, "title": "t", "info": "i", "image": "img"}
+    assert response == {
+        "id": 665,
+        "title": "t",
+        "info": "i",
+        "image": "img",
+        "paintings": {4: "a", 5: "b"},
+    }

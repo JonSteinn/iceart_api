@@ -63,8 +63,6 @@ def test_painting_repository_get_all_paintings_by_ids():
 
     # Act
     multiple = repo.get_paintings_by_ids([0, 7])
-    cached = repo.get_paintings_by_ids([0, 7])
 
     # Assert
     assert {p.identity for p in multiple} == {0, 7}
-    assert {p.identity for p in cached} == {0, 7}

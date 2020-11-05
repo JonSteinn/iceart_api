@@ -26,6 +26,7 @@ def mock_artist_dto_constructor(self):
     self.title = "t"
     self.info = "i"
     self.image = "img"
+    self.paintings = {4: "a", 5: "b"}
 
 
 old_init = PaintingDto.__init__

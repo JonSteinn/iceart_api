@@ -1,4 +1,4 @@
-from typing import List
+from typing import Dict, List
 
 from werkzeug.exceptions import NotFound
 
@@ -49,12 +49,19 @@ class ArtistDto:
 
     #  pylint: disable = too-few-public-methods
 
-    def __init__(self, artist: Artist):
+    def __init__(self, artist: Artist, thumbnails: Dict[int, str]):
         self.id = artist.identity  # pylint: disable=invalid-name
         self.title = artist.title
         self.info = artist.info
         self.image = get_image_as_base64_string(artist.file)
+        self.paintings = thumbnails
 
     def as_json(self) -> dict:
         """Convert to dictionary."""
-        return self.__dict__
+        return {
+            "id": self.id,
+            "title": self.title,
+            "info": self.info,
+            "image": self.image,
+            "paintings": self.paintings.copy(),
+        }

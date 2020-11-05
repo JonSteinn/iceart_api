@@ -43,14 +43,21 @@ def test_artist_dto_init():
 
     # Act
     with pytest_mock.mock.patch("pathlib.Path.joinpath", return_value=p):
-        dto = ArtistDto(model)
+        dto = ArtistDto(model, {1: "img1", 2: "img2"})
 
     # Assert
     assert dto.image == "q+8="
     assert dto.id == 44
     assert dto.title == "t"
     assert dto.info == "i"
-    assert dto.as_json() == {"id": 44, "title": "t", "info": "i", "image": "q+8="}
+    assert dto.as_json() == {
+        "id": 44,
+        "title": "t",
+        "info": "i",
+        "image": "q+8=",
+        "paintings": {1: "img1", 2: "img2"},
+    }
+    assert dto.paintings == {1: "img1", 2: "img2"}
 
     # Cleanup
     os.remove(p)
