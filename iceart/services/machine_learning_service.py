@@ -1,6 +1,9 @@
 import abc
+from os import listdir
 
 import cv2
+import imagehash
+import numpy as np
 
 from ..models import ImageViewModel, PaintingDto
 from ..repositories import IPaintingRepository
@@ -12,7 +15,7 @@ class IMachineLearningService(abc.ABC):
     # pylint: disable=too-few-public-methods
 
     @abc.abstractmethod
-    def get_most_smilar_painting(self, image_vm: ImageViewModel) -> PaintingDto:
+    def get_most_similar_painting(self, image_vm: ImageViewModel) -> PaintingDto:
         """Find the most similar image and return its id."""
 
 
@@ -23,8 +26,18 @@ class MachineLearningService(IMachineLearningService):
 
     def __init__(self, painting_repository: IPaintingRepository):
         self._painting_repository = painting_repository
+        self.HASH_SIZE = 128
+        self.MOST_DIFF = self.MOST_DIFF * self.MOST_DIFF
+        self.hash_list = dict()
 
-    def crop_image(self, image_vm: ImageViewModel) -> ImageViewModel:
+        for f in listdir("../resources/images/"):
+            img = cv2.imread(f)
+            self.hash_list[f[:-4]] = (
+                imagehash.phash(img, self.HASH_SIZE).hash
+                + imagehash.whash(img, self.HASH_SIZE).hash
+            )
+
+    def crop_image(self, img):
         """Crop a loaded image"""
 
         def get_contours(img):
@@ -102,14 +115,23 @@ class MachineLearningService(IMachineLearningService):
             minx, miny, maxx, maxy = boundaries
             return img[miny:maxy, minx:maxx]
 
-        img = image_vm.image
         contours = get_contours(img)
         bounds = get_boundaries(img, contours)
         cropped = crop(img, bounds)
         if get_size(cropped) < 100000:
-            return image_vm
+            return img
         return cropped
 
-    def get_most_smilar_painting(self, image_vm: ImageViewModel) -> PaintingDto:
-        print("get_most_smilar_painting has not been implemented!", flush=True)
+    def get_most_similar_painting(self, image_vm: ImageViewModel) -> PaintingDto:
+        image = self.crop_image(image_vm.image)
+        hash_image = (
+            imagehash.phash(image, self.HASH_SIZE).hash
+            + imagehash.whash(image, self.HASH_SIZE).hash
+        )
+        best = None
+        best_value = self.MOST_DIFF
+        for img in self.hash_list:
+            if best_value > np.count_nonzero(self.hash_list[img] != hash_image):
+                best = img
+        # call api for best
         raise NotImplementedError()
