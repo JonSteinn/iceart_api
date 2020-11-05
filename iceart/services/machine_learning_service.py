@@ -40,9 +40,9 @@ class MachineLearningService(IMachineLearningService):
         answer: dict = self._cache.get(cache_key)
         if answer is None:
             answer = dict()
-            for p in self._painting_repository.get_all_paintings():
-                img = cv2.imread(get_image_path(p.file).as_posix())
-                answer[p.identity()] = create_image_hash(img)
+            for painting in self._painting_repository.get_all_paintings():
+                img = cv2.imread(get_image_path(painting.file).as_posix())
+                answer[painting.identity()] = create_image_hash(img)
             self._cache.set(cache_key, answer)
         return answer
 

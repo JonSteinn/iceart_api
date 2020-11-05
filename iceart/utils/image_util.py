@@ -32,23 +32,23 @@ def _get_contours(img):
     imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # Find the right threshold level
-    tl: int = 100
-    _, thresh = cv2.threshold(imgray, tl, 255, 0)
+    tresh_level: int = 100
+    _, thresh = cv2.threshold(imgray, tresh_level, 255, 0)
     while _white_percent(thresh) > 0.85:
-        tl += 10
-        _, thresh = cv2.threshold(imgray, tl, 255, 0)
+        tresh_level += 10
+        _, thresh = cv2.threshold(imgray, tresh_level, 255, 0)
 
     contours, _ = cv2.findContours(thresh, 1, 2)
 
     # filter contours that are too large or small
-    contours = [cc for cc in contours if _contour_ok(img, cc)]
+    contours = [contour for contour in contours if _contour_ok(img, contour)]
     return contours
 
 
 def _get_size(img):
     """Return the size of the image in pixels."""
-    ih, iw = img.shape[:2]
-    return iw * ih
+    height, width = img.shape[:2]
+    return height * width
 
 
 def _white_percent(img):
@@ -56,14 +56,14 @@ def _white_percent(img):
     return cv2.countNonZero(img) / _get_size(img)
 
 
-def _contour_ok(img, cc):
+def _contour_ok(img, contour):
     """Check if the contour is a good predictor of photo location."""
-    if _near_edge(img, cc):
+    if _near_edge(img, contour):
         return False  # shouldn't be near edges
-    _, _, w, h = cv2.boundingRect(cc)
-    if w < 100 or h < 100:
+    _, _, width, height = cv2.boundingRect(contour)
+    if width < 100 or height < 100:
         return False  # too narrow or wide is bad
-    area = cv2.contourArea(cc)
+    area = cv2.contourArea(contour)
     if area > _get_size(img) * 0.3:
         return False
     if area < 200:
@@ -74,22 +74,22 @@ def _contour_ok(img, cc):
 def _near_edge(img, contour):
     """Check if a contour is near the edge in the given image."""
     x, y, w, h = cv2.boundingRect(contour)
-    ih, iw = img.shape[:2]
-    mm = 80  # margin in pixels
-    return x < mm or x + w > iw - mm or y < mm or y + h > ih - mm
+    height, width = img.shape[:2]
+    margin = 80  # margin in pixels
+    return x < margin or x + w > width - margin or y < margin or y + h > height - margin
 
 
 def _get_boundaries(img, contours):
     """Find the boundaries of the photo in the image using contours."""
     # margin is the minimum distance from the edges of the image, as a fraction
-    ih, iw = img.shape[:2]
-    minx = iw
-    miny = ih
+    height, width = img.shape[:2]
+    minx = width
+    miny = height
     maxx = 0
     maxy = 0
 
-    for cc in contours:
-        x, y, w, h = cv2.boundingRect(cc)
+    for contour in contours:
+        x, y, w, h = cv2.boundingRect(contour)
         if x < minx:
             minx = x
         if y < miny:
