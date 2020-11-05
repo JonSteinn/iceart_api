@@ -34,7 +34,7 @@ class MachineLearningService(IMachineLearningService):
         self._painting_repository = painting_repository
         self._cache: Cache = cache
 
-    def all_hash(self):
+    def _all_hash(self):
         """Return hash for all paintings and cache if necessary"""
         cache_key = CacheKeyManager.ml_cache_key()
         answer: dict = self._cache.get(cache_key)
@@ -52,9 +52,9 @@ class MachineLearningService(IMachineLearningService):
         hash_image = create_image_hash(image)
         best = -1
         best_value = get_most_difference()
-        hash_list = self.all_hash()
-        for p in hash_list:
-            if best_value > np.count_nonzero(hash_list[p] != hash_image):
-                best = p
+        hash_list = self._all_hash()
+        for k, h in hash_list:
+            if best_value > np.count_nonzero(h != hash_image):
+                best = k
         fake_vm = PaintingViewModel(best)
         return PaintingDto(self._painting_repository.get_painting_by_id(fake_vm))
