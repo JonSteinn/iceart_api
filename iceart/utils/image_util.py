@@ -35,7 +35,8 @@ def create_image_hash_from_bytes(b_img: bytes) -> np.ndarray:
 
 def create_image_hash_from_file(filename: str) -> np.ndarray:
     """Create a numpy 01 hash array for the given image file."""
-    return _create_image_hash(Image.open(get_image_path(filename).as_posix()))
+    cropped = _crop_image(cv2.imread(get_image_path(filename).as_posix()))
+    return _create_image_hash(Image.fromarray(cropped))
 
 
 def get_image_hash_difference(hash1: np.ndarray, hash2: np.ndarray) -> int:
