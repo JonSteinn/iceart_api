@@ -37,8 +37,8 @@ def test_artist_service_get_artist_by_id():
     assert response.info == "i"
     assert response.image == "/w=="
     assert response.paintings == [
-        {"id": 4, "image": "/9g="},
-        {"id": 77, "image": "/9g="},
+        {"id": 4, "image": "/9g=", "name": "m_title4"},
+        {"id": 77, "image": "/9g=", "name": "m_title77"},
     ]
 
     # Cleanup

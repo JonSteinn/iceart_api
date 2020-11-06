@@ -46,6 +46,7 @@ class ArtistService(IArtistService):
                     "image": get_image_as_thumbnail(
                         get_image_path(painting.file).as_posix()
                     ),
+                    "name": painting.title,
                 }
                 for painting in paintings
             ]

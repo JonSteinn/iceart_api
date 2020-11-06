@@ -35,7 +35,7 @@ def test_artist_integration_get_artist_by_id_ok():
         "title": "ma_title2",
         "info": "ma_info2",
         "image": "rw==",
-        "paintings": [{"id": 7, "image": "/9g="}],
+        "paintings": [{"id": 7, "image": "/9g=", "name": "m_title7"}],
     }
 
     # Cleanup
