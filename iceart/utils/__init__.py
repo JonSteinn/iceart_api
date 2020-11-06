@@ -1,8 +1,9 @@
 from .cache_keys import CacheKeyManager
 from .image_util import (
-    create_image_hash,
-    crop_image,
+    create_image_hash_from_bytes,
+    create_image_hash_from_file,
     get_image_as_thumbnail,
+    get_image_hash_difference,
     get_most_difference,
 )
 from .path_manager import get_abs_path, get_image_path
@@ -14,8 +15,9 @@ __all__ = [
     "get_image_as_bytes",
     "get_image_as_base64_string",
     "CacheKeyManager",
-    "crop_image",
     "get_most_difference",
-    "create_image_hash",
     "get_image_as_thumbnail",
+    "create_image_hash_from_bytes",
+    "create_image_hash_from_file",
+    "get_image_hash_difference",
 ]
