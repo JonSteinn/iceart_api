@@ -35,5 +35,7 @@ responses:
                 type: integer
               image:
                 type: string
+              name:
+                type: string
   404:
     description: "Artist not found"

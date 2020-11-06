@@ -30,6 +30,7 @@ def test_artist_service_get_artist_by_id():
             with pytest_mock.mock.patch("cv2.resize", return_value=None):
                 with pytest_mock.mock.patch("cv2.imencode", return_value=(None, M())):
                     response = service.get_artist_by_id(_id)
+                    cached_response = service.get_artist_by_id(_id)
 
     # Assert
     assert response.id == _id
@@ -37,8 +38,17 @@ def test_artist_service_get_artist_by_id():
     assert response.info == "i"
     assert response.image == "/w=="
     assert response.paintings == [
-        {"id": 4, "image": "/9g="},
-        {"id": 77, "image": "/9g="},
+        {"id": 4, "image": "/9g=", "name": "m_title4"},
+        {"id": 77, "image": "/9g=", "name": "m_title77"},
+    ]
+
+    assert cached_response.id == _id
+    assert cached_response.title == "t"
+    assert cached_response.info == "i"
+    assert cached_response.image == "/w=="
+    assert cached_response.paintings == [
+        {"id": 4, "image": "/9g=", "name": "m_title4"},
+        {"id": 77, "image": "/9g=", "name": "m_title77"},
     ]
 
     # Cleanup

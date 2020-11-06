@@ -17,3 +17,4 @@ omit =
     iceart/db/*
     iceart/main.py
     setup.py
+    iceart/utils/image_util.py
