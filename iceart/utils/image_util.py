@@ -10,8 +10,8 @@ from .path_manager import get_image_path
 
 _HASH_SIZE = 128
 _THUMBNAIL_DIM = (100, 100)
-_CROP_LIMIT = 10000
-_THRESH_LEVEL = 100
+_CROP_LIMIT = 500
+_THRESH_LEVEL = 150
 
 Rect = Tuple[int, int, int, int]
 
@@ -35,7 +35,8 @@ def create_image_hash_from_bytes(b_img: bytes) -> np.ndarray:
 
 def create_image_hash_from_file(filename: str) -> np.ndarray:
     """Create a numpy 01 hash array for the given image file."""
-    return _create_image_hash(Image.open(get_image_path(filename).as_posix()))
+    cropped = _crop_image(cv2.imread(get_image_path(filename).as_posix()))
+    return _create_image_hash(Image.fromarray(cropped))
 
 
 def get_image_hash_difference(hash1: np.ndarray, hash2: np.ndarray) -> int:
@@ -49,6 +50,10 @@ def get_most_difference() -> int:
     return _HASH_SIZE ** 2 + 1
 
 
+def _create_image_hash(img: np.ndarray) -> np.ndarray:
+    return imagehash.phash(img, _HASH_SIZE).hash + imagehash.whash(img, _HASH_SIZE).hash
+
+
 def _crop_image(img: np.ndarray) -> np.ndarray:
     contours = _get_contours(img)
     bounds = _get_boundaries(img, contours)
@@ -58,10 +63,6 @@ def _crop_image(img: np.ndarray) -> np.ndarray:
     return cropped
 
 
-def _create_image_hash(img: np.ndarray) -> np.ndarray:
-    return imagehash.phash(img, _HASH_SIZE).hash + imagehash.whash(img, _HASH_SIZE).hash
-
-
 def _get_contours(img: np.ndarray) -> List[np.ndarray]:
     """Threshold the image and get contours."""
     # First make the image 1-bit and get contours
@@ -69,9 +70,6 @@ def _get_contours(img: np.ndarray) -> List[np.ndarray]:
     # Find the right threshold level
     tresh_level: int = _THRESH_LEVEL
     _, thresh = cv2.threshold(imgray, tresh_level, 255, 0)
-    while _white_percent(thresh) > 0.85:
-        tresh_level += 10
-        _, thresh = cv2.threshold(imgray, tresh_level, 255, 0)
     contours, _ = cv2.findContours(thresh, 1, 2)
     # filter contours that are too large or small
     return [contour for contour in contours if _contour_ok(img, contour)]
@@ -84,35 +82,17 @@ def _get_size(img: np.ndarray) -> int:
     return square
 
 
-def _white_percent(img: np.ndarray):
-    """Return the percentage of the thresholded image that's white."""
-    return cv2.countNonZero(img) / _get_size(img)
-
-
 def _contour_ok(img: np.ndarray, contour: np.ndarray) -> bool:
     """Check if the contour is a good predictor of photo location."""
-    if _near_edge(img, contour):
-        return False  # shouldn't be near edges
     _, _, width, height = cv2.boundingRect(contour)
-    if width < 100 or height < 100:
+    if width < 50 or height < 50:
         return False  # too narrow or wide is bad
     area = cv2.contourArea(contour)
-    if area > _get_size(img) * 0.3:
+    if area > _get_size(img) * 0.5:
         return False
     if area < 200:
         return False
     return True
-
-
-def _near_edge(img: np.ndarray, contour: np.ndarray) -> bool:
-    """Check if a contour is near the edge in the given image."""
-    x, y, w, h = cv2.boundingRect(contour)
-    height, width = img.shape[:2]
-    margin = 80  # margin in pixels
-    res: bool = (
-        x < margin or x + w > width - margin or y < margin or y + h > height - margin
-    )
-    return res
 
 
 def _get_boundaries(img: np.ndarray, contours: np.ndarray) -> Rect:
