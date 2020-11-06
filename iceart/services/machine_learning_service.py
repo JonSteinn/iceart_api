@@ -4,13 +4,7 @@ from flask_caching import Cache
 
 from ..models import ImageViewModel, PaintingDto, PaintingViewModel
 from ..repositories import IPaintingRepository
-from ..utils import (
-    CacheKeyManager,
-    create_image_hash_from_bytes,
-    create_image_hash_from_file,
-    get_image_hash_difference,
-    get_most_difference,
-)
+from ..utils import CacheKeyManager, image_util
 
 
 class IMachineLearningService(abc.ABC):
@@ -38,12 +32,12 @@ class MachineLearningService(IMachineLearningService):
         return PaintingDto(self._painting_repository.get_painting_by_id(v_m))
 
     def _get_best_match(self, image: bytes) -> int:
-        hash_image = create_image_hash_from_bytes(image)
-        best_id, best_value = -1, get_most_difference()
+        hash_image = image_util.create_image_hash_from_bytes(image)
+        best_id, best_value = -1, image_util.get_most_difference()
         hash_list = self._all_hash()
         for image_id, image_hash in hash_list.items():
-            curr_val = get_image_hash_difference(image_hash, hash_image)
-            if best_value > curr_val:
+            curr_val = image_util.get_image_hash_difference(image_hash, hash_image)
+            if curr_val < best_value:
                 best_id, best_value = image_id, curr_val
         return best_id
 
@@ -53,7 +47,7 @@ class MachineLearningService(IMachineLearningService):
         answer: dict = self._cache.get(cache_key)
         if answer is None:
             answer = {
-                painting.identity: create_image_hash_from_file(painting.file)
+                painting.identity: image_util.create_image_hash_from_file(painting.file)
                 for painting in self._painting_repository.get_all_paintings()
             }
             self._cache.set(cache_key, answer)
