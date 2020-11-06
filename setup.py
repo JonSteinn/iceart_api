@@ -46,6 +46,7 @@ setup(
         "numpy==1.19.4",
         "opencv-python==4.4.0.46",
         "ImageHash==4.1.0",
+        "Pillow==8.0.1",
     ],
     python_requires=">=3.7",
     include_package_data=True,
